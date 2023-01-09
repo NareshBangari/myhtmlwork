@@ -1,0 +1,33 @@
+<title>This is an example for nested loop in JavaScript</title>
+</head>
+<body>
+<p>Click below button to loop inner loop each ( 7 ) times for outer loop.</p>
+<button onclick="myFunction()">Click Here</button>
+<p id="did"></p>
+<script>
+function myFunction() {
+var text = "";
+var i;
+var j;
+var output="";
+var count = 0;
+var bnh= 68;
+for (i = 1; i < 70; i++) {
+for (j = 1; j <8; j+=1) {
+if(count<68){
+output +=(count+1);
+count++;
+text += "The day is = " + i + " and chapter = " + count + "<br>";
+
+} else{
+    count++;
+    count = count-68;
+  text += "The day is = " + i + " and chapter = " + count + "<br>";
+  }
+}
+}
+document.getElementById("did").innerHTML = text;
+}
+</script>
+</body>
+</html>

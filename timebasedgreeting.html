@@ -1,0 +1,22 @@
+<html>
+<body>
+<h1> hello Naresh</h1>
+
+<p>Based on time greeting </p>
+<p id="demo" ></p>
+<script>
+const hour = new Date().getHours();
+let greeting;
+if (hour<12){
+greeting = "Good Mornong";
+}
+else if (hour>20){
+greeting = "Goodnight";
+}
+else{
+greeting= "Good Afternoon";
+}
+document.getElementById("demo").innerHTML=greeting;
+</script>
+</body>
+</html>

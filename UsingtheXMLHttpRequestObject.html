@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+        
+table, th, td {
+  border:1px solid black;
+  width:30%;
+  }
+  
+</style>
+</head>          
+
+<body>
+
+    <h2>Using the XMLHttpRequest Object</h2>
+
+    <div>
+        <input type="text" id="txtAnimalName" />
+        <button type="button"  onclick="loadXMLDoc()">Send Request</button>
+        
+                 
+    </div>
+    
+    <div id="result"></div>
+       
+    <script>
+        function loadXMLDoc() {
+            var animalName = document.getElementById("txtAnimalName").value;
+            console.log(txtAnimalName)
+            if (animalName == '') {
+                alert("Please enter animal name");
+                return;
+            }
+            var url = "https://api.api-ninjas.com/v1/animals?name=" + animalName; 
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var jsonObj = JSON.parse(this.responseText);
+                    console.log(jsonObj)
+                    
+                    tableString = jsonObj.map(m => "<table><tr><th>" + m.name + " </th></tr>"+ "<tr><td> " + m.taxonomy.kingdom + "<br> " +m.taxonomy.scientific_name + "<br>" +m.taxonomy.phylum +"<br>"+ m.taxonomy.class + "<br>" + 
+                                                                      m.taxonomy.order+"<br>"+m.taxonomy.family+"<br>"+m.taxonomy.genus+"</td></tr></table>").join('');
+                    
+                    document.getElementById("result").innerHTML = tableString;
+                    var tableRow = document.getElementsByTagName("tr");
+                    var colors = ["#FF0000", "#00FF00", "#0000FF","#FF5733"];
+                    for(var i = 0; i < tableRow.length; i++) {
+                    tableRow[i].style.backgroundColor = colors[i % colors.length];
+                    }
+
+                }
+            };
+            xhttp.open("GET", url, true);
+            xhttp.setRequestHeader("X-Api-Key", "Knodm7jwI56KaTeZpe4trA==eJoYEM5ugjyqClXo");
+            xhttp.send();
+          
+        }
+    </script>
+               
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+        
+table, th, td {
+  border:1px solid black;
+}
+
+.loader {
+    position: fixed;
+    z-index: 99;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader > img {
+    width: 100px;
+}
+
+.loader.hidden {
+    animation: fadeOut 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeOut {
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+</style>
+</head>       
+<body>
+    
+       <div class="spinner-border text-primary" 
+        id="spinner" role="status">
+       <span class="sr-only">Loading...</span>
+       </div>
+
+
+    <h2>Using the XMLHttpRequest Object</h2>
+
+    <div>
+        <input type="text" id="txtAnimalName" />
+        <button type="button" onclick="loadXMLDoc()">Send Request</button>
+        
+    </div>
+    <div id="result">
+    </div>
+    <script>
+        function loadXMLDoc() {
+            var animalName = document.getElementById("txtAnimalName").value;
+            
+            if (animalName == '') {
+                alert("Please enter animal name");
+                return;
+            }
+           
+            var url = "https://api.api-ninjas.com/v1/animals?name=" + animalName; 
+            
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {                
+                                
+                if (this.readyState == 4 && this.status == 200) {
+
+                    hideSpinner();
+                    // Function to hide the Spinner
+                                      
+                     var jsonObj = JSON.parse(this.responseText);
+                                        
+                    var tableString = "<table><tr><th>Name</th><th>Kingdom</th></tr>";
+
+                    tableString = tableString + jsonObj.map(m => "<tr><td>" + m.name + "<br> " + m.taxonomy.kingdom + "<br> " +m.taxonomy.scientific_name + "</td></tr>").join('');
+
+                    tableString = tableString+ "</table>";
+                    console.log(tableString)
+                    document.getElementById("result").innerHTML = tableString;
+                    var tableRow = document.getElementsByTagName("tr");
+                    var colors = ["#FF0000", "#00FF00", "#0000FF","#FF5733"];
+                    for(var i = 0; i < tableRow.length; i++) {
+                    tableRow[i].style.backgroundColor = colors[i % colors.length];
+                    }
+
+                }
+            };
+            function hideSpinner() {
+                    document.getElementById('spinner')
+                     .style.display = 'none';
+            }
+            xhttp.open("GET", url, true);
+            xhttp.setRequestHeader("X-Api-Key", "Knodm7jwI56KaTeZpe4trA==eJoYEM5ugjyqClXo");
+            xhttp.send();
+            
+
+        }
+    </script>
+
+</body>
+
+</html>

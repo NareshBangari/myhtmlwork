@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align:center;
+}
+</style>
+</head>
+<body>
+<table style="width: 80%;">
+  
+            <thead>
+            <tr>
+                <th>DATE</th>
+                <th>Chapters read Today</th>
+                <th>Total chapters completed</th>
+            </tr>
+        </thead>
+        <tbody id="xxx">
+
+        </tbody>
+    </table>
+
+    <script>
+    var readchap =[4,7];
+    var sum=0;
+    
+        for (var a = 0, aa = readchap.length ; a < aa ; a++){
+                  
+            var table1 = document.getElementById('xxx');
+            var rowrow =  document.createElement('tr');
+            var y=readchap[a];
+            for ( i=0; i <1; i++) {           
+             
+             var x=1;
+             const range = [x, y];
+        const naturalBetweenRange = ([lower, upper] = [1, 1]) => {
+   if(lower > upper){
+      return [];
+   };
+   const res = [];
+   for(let j = lower; j <= upper; j++){
+      res.push(j);
+   };
+   return res;
+}
+
+                var cell1  =  document.createElement('td');
+                var text1 = document.createTextNode('Day'+a);
+
+                var cell2  =  document.createElement('td');
+         var text2 =  document.createTextNode(naturalBetweenRange(range));   
+                //document.write(naturalBetweenRange(range));
+                
+                cell1.appendChild(text1);
+                rowrow.appendChild(cell1);
+                
+                cell2.appendChild(text2);
+                rowrow.appendChild(cell2);
+                
+                sum = readchap[a]+sum;
+                if(sum>68){
+                var cell3  =  document.createElement('td');
+                var text3 = document.createTextNode(sum-68);
+                      
+
+                cell3.appendChild(text3);
+                rowrow.appendChild(cell3);
+              }  
+                else {
+                    var cell3  =  document.createElement('td');
+                    var text3 = document.createTextNode(sum);
+                          
+                     cell3.appendChild(text3);
+                    rowrow.appendChild(cell3);
+              
+              }
+                
+            }
+                            
+              
+            table1.appendChild(rowrow);
+        }
+        
+    </script>
+</body>
+</html>

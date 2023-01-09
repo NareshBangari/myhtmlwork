@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+        
+table, th, td {
+  border:1px solid black;
+  width:30%;
+  }
+  #spinner {
+        display: none;
+    }
+
+    .loading {
+        border: 2px solid #ccc;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border-top-color: #1ecd97;
+        border-left-color: #1ecd97;
+        animation: spin 1s infinite ease-in;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    .loader.hidden {
+    animation: fadeOut 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeOut {
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+  
+</style>
+</head>          
+
+<body>  
+
+    <h2>Using the XMLHttpRequest Object</h2>
+
+    <div>
+        <input type="text" id="txtAnimalName" />
+        <button type="button"  onclick="loadXMLDoc(); spinner()">Send Request</button>
+   </div>   
+    <div id="result"></div>
+    
+    <div id="spinner" class="loading"></div>
+    
+        <script>
+        function spinner() {
+                    document.getElementById("spinner").style.display = "block";
+                 }
+        function loadXMLDoc() {        
+                
+                var animalName = document.getElementById("txtAnimalName").value;
+                 console.log(txtAnimalName)
+                if (animalName == '') {
+                alert("Please enter animal name");
+                return;
+                 }
+
+            var url = "https://api.api-ninjas.com/v1/animals?name=" + animalName; 
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                
+                if (this.readyState == 4 && this.status == 200) {
+
+                    hideSpinner();
+                    var jsonObj = JSON.parse(this.responseText);
+                        console.log(jsonObj) 
+                                   
+                    tableString = jsonObj.map(m => "<table><tr><th>" + m.name + " </th></tr>"+ "<tr><td> " + m.taxonomy.kingdom + "<br> " +m.taxonomy.scientific_name + "<br>" +m.taxonomy.phylum +"<br>"+ m.taxonomy.class + "<br>" + 
+                                                                      m.taxonomy.order+"<br>"+m.taxonomy.family+"<br>"+m.taxonomy.genus+"</td></tr></table>").join('');
+                    
+                    document.getElementById("result").innerHTML = tableString;
+                    var tableRow = document.getElementsByTagName("tr");
+                    var colors = ["#FF0000", "#00FF00", "#0000FF","#FF5733"];
+                    for(var i = 0; i < tableRow.length; i++) {
+                    tableRow[i].style.backgroundColor = colors[i % colors.length];
+                    }
+
+                }
+                function hideSpinner() {
+                    document.getElementById('spinner')
+                     .style.display = 'none';
+                }
+            };
+            xhttp.open("GET", url, true);
+            xhttp.setRequestHeader("X-Api-Key", "Knodm7jwI56KaTeZpe4trA==eJoYEM5ugjyqClXo");
+            xhttp.send();
+          
+        }
+    </script>
+</body>
+</html>
